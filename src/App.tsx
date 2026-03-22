@@ -9,9 +9,6 @@ function App() {
 
   const onDoneConfiguring = useCallback((settings: TrackerSettings) => {
     setTrackerStore(new TrackerStore(settings));
-    if (settings.shouldUseColorKeyBackground) {
-      document.body.style = `background: ${settings.hexColorKeyBackground}`;
-    }
   }, []);
 
   const onLoadedPreviousState = useCallback((store: TrackerStore) => {

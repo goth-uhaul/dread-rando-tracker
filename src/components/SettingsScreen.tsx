@@ -77,13 +77,21 @@ export default function SettingsScreen({
     );
   }, []);
 
+  const changeColorKey = useCallback(() => {
+    if (shouldUseColorKeyBackground) {
+      document.body.style = `background: ${hexColorKeyBackground}`;
+    }
+  }, [hexColorKeyBackground, shouldUseColorKeyBackground]);
+
   const onClickLoadPreviousState = useCallback(() => {
     const store = loadPreviousState();
+
+    changeColorKey();
 
     if (store) {
       loadedPreviousState(store);
     }
-  }, [loadedPreviousState]);
+  }, [loadedPreviousState, changeColorKey]);
 
   return (
     <div className="container">
@@ -324,6 +332,12 @@ export default function SettingsScreen({
                 shouldUseColorKeyBackground: shouldUseColorKeyBackground,
                 hexColorKeyBackground: hexColorKeyBackground,
               };
+
+              changeColorKey();
+
+              if (shouldUseColorKeyBackground) {
+                document.body.style = `background: ${hexColorKeyBackground}`;
+              }
 
               saveSettings(settings);
               doneConfiguring(settings);
