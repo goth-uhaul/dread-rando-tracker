@@ -1,13 +1,14 @@
 import { MajorItem } from "./types";
 
 const flashShift: MajorItem[] = [
-	{
-		id: "flashShift",
-		name: "Flash Shift",
-		type: "single",
-		icon: "./assets/item-icons/aeion-flashshift.png",
-		maxUpgrades: 0,
-	},
+  {
+    id: "flashShift",
+    name: "Flash Shift",
+    type: "single",
+    icon: "./assets/item-icons/aeion-flashshift.png",
+    defaultMaxUpgrades: 0,
+    maxUpgrades: 0,
+  },
 ];
 
 export default flashShift;

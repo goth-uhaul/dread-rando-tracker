@@ -1,13 +1,14 @@
-import { MajorItem } from "./types";
+import { SingleMajorItem } from "./types";
 
-const speedBoosterUpgrades: MajorItem[] = [
-	{
-		id: "speedBoosterWithUpgrades",
-		name: "Speed Booster",
-		type: "single",
-		icon: "./assets/item-icons/movement-speedbooster.png",
-		maxUpgrades: 4,
-	},
+const speedBoosterUpgrades: SingleMajorItem[] = [
+  {
+    id: "speedBoosterWithUpgrades",
+    name: "Speed Booster",
+    type: "single",
+    icon: "./assets/item-icons/movement-speedbooster.png",
+    defaultMaxUpgrades: 4,
+    maxUpgrades: 0,
+  },
 ];
 
 export default speedBoosterUpgrades;

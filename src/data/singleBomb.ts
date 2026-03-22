@@ -1,20 +1,22 @@
 import { MajorItem } from "./types";
 
 const singleBomb: MajorItem[] = [
-	{
-		id: "morphBallBomb",
-		name: "Morph Ball Bomb",
-		type: "single",
-		icon: "./assets/item-icons/bomb-morph.png",
-		maxUpgrades: 0,
-	},
-	{
-		id: "crossBomb",
-		name: "Cross Bomb",
-		type: "single",
-		icon: "./assets/item-icons/bomb-cross.png",
-		maxUpgrades: 0,
-	},
+  {
+    id: "morphBallBomb",
+    name: "Morph Ball Bomb",
+    type: "single",
+    icon: "./assets/item-icons/bomb-morph.png",
+    defaultMaxUpgrades: 0,
+    maxUpgrades: 0,
+  },
+  {
+    id: "crossBomb",
+    name: "Cross Bomb",
+    type: "single",
+    icon: "./assets/item-icons/bomb-cross.png",
+    defaultMaxUpgrades: 0,
+    maxUpgrades: 0,
+  },
 ];
 
 export default singleBomb;

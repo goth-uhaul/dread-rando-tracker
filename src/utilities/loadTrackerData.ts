@@ -1,111 +1,121 @@
 import { TrackerSettings } from "./settings";
 import {
-	progressiveBeam,
-	singleBeam,
-	progressiveCharge,
-	singleCharge,
-	grappleBeam,
-	morphBall,
-	progressiveBomb,
-	singleBomb,
-	powerBomb,
-	progressiveMissile,
-	singleMissile,
-	stormMissile,
-	spiderMagnet,
-	speedBooster,
-	speedBoosterUpgrades,
-	progressiveSpin,
-	singleJump,
-	screwAttack,
-	progressiveSuit,
-	singleSuit,
-	phantomCloak,
-	flashShift,
-	flashShiftUpgrades,
-	pulseRadar,
-	majorBosses,
+  progressiveBeam,
+  singleBeam,
+  progressiveCharge,
+  singleCharge,
+  grappleBeam,
+  morphBall,
+  progressiveBomb,
+  singleBomb,
+  powerBomb,
+  progressiveMissile,
+  singleMissile,
+  stormMissile,
+  spiderMagnet,
+  speedBooster,
+  speedBoosterUpgrades,
+  progressiveSpin,
+  singleJump,
+  screwAttack,
+  progressiveSuit,
+  singleSuit,
+  phantomCloak,
+  flashShift,
+  flashShiftUpgrades,
+  pulseRadar,
+  majorBosses,
 } from "../data";
 import { MajorBoss, MajorItem } from "../data/types";
 
 export function getItemData(itemsSettings: TrackerSettings) {
-	const itemsList: MajorItem[] = [];
+  const itemsList: MajorItem[] = [];
 
-	if (itemsSettings?.progressiveBeam) {
-		itemsList.push(...progressiveBeam);
-	} else {
-		itemsList.push(...singleBeam);
-	}
+  if (itemsSettings?.progressiveBeam) {
+    itemsList.push(...progressiveBeam);
+  } else {
+    itemsList.push(...singleBeam);
+  }
 
-	if (itemsSettings?.progressiveCharge) {
-		itemsList.push(...progressiveCharge);
-	} else {
-		itemsList.push(...singleCharge);
-	}
+  if (itemsSettings?.progressiveCharge) {
+    itemsList.push(...progressiveCharge);
+  } else {
+    itemsList.push(...singleCharge);
+  }
 
-	itemsList.push(...grappleBeam);
-	itemsList.push(...morphBall);
+  itemsList.push(...grappleBeam);
+  itemsList.push(...morphBall);
 
-	if (itemsSettings?.progressiveBomb) {
-		itemsList.push(...progressiveBomb);
-	} else {
-		itemsList.push(...singleBomb);
-	}
+  if (itemsSettings?.progressiveBomb) {
+    itemsList.push(...progressiveBomb);
+  } else {
+    itemsList.push(...singleBomb);
+  }
 
-	itemsList.push(...powerBomb);
+  itemsList.push(...powerBomb);
 
-	if (itemsSettings?.progressiveMissile) {
-		itemsList.push(...progressiveMissile);
-	} else {
-		itemsList.push(...singleMissile);
-	}
+  if (itemsSettings?.progressiveMissile) {
+    itemsList.push(...progressiveMissile);
+  } else {
+    itemsList.push(...singleMissile);
+  }
 
-	itemsList.push(...stormMissile);
-	itemsList.push(...spiderMagnet);
+  itemsList.push(...stormMissile);
+  itemsList.push(...spiderMagnet);
 
-	if (itemsSettings?.speedBoosterHasUpgrades) {
-		itemsList.push(...speedBoosterUpgrades);
-	} else {
-		itemsList.push(...speedBooster);
-	}
+  if (itemsSettings?.speedBoosterHasUpgrades) {
+    speedBoosterUpgrades[0].maxUpgrades =
+      itemsSettings.numberOfSpeedBoosterUpgrades ??
+      speedBoosterUpgrades[0].defaultMaxUpgrades;
 
-	if (itemsSettings?.progressiveSpin) {
-		itemsList.push(...progressiveSpin);
-	} else {
-		itemsList.push(...singleJump);
-	}
+    itemsList.push(...speedBoosterUpgrades);
+  } else {
+    itemsList.push(...speedBooster);
+  }
 
-	itemsList.push(...screwAttack);
+  if (itemsSettings?.progressiveSpin) {
+    itemsList.push(...progressiveSpin);
+  } else {
+    itemsList.push(...singleJump);
+  }
 
-	if (itemsSettings?.progressiveSuit) {
-		itemsList.push(...progressiveSuit);
-	} else {
-		itemsList.push(...singleSuit);
-	}
+  itemsList.push(...screwAttack);
 
-	itemsList.push(...phantomCloak);
+  if (itemsSettings?.progressiveSuit) {
+    itemsList.push(...progressiveSuit);
+  } else {
+    itemsList.push(...singleSuit);
+  }
 
-	if (itemsSettings?.flashShiftHasUpgrades) {
-		itemsList.push(...flashShiftUpgrades);
-	} else {
-		itemsList.push(...flashShift);
-	}
+  itemsList.push(...phantomCloak);
 
-	itemsList.push(...pulseRadar);
+  if (itemsSettings?.flashShiftHasUpgrades) {
+    flashShiftUpgrades[0].maxUpgrades =
+      itemsSettings.numberOfFlashShiftUpgrades ??
+      flashShiftUpgrades[0].defaultMaxUpgrades;
 
-	return itemsList;
+    itemsList.push(...flashShiftUpgrades);
+  } else {
+    itemsList.push(...flashShift);
+  }
+
+  itemsList.push(...pulseRadar);
+
+  return itemsList;
 }
 
 export function getBossData() {
-	return majorBosses;
+  return majorBosses;
 }
 
 export function getImagesToPreload(items: MajorItem[], bosses: MajorBoss[]) {
-	const itemImages = items.flatMap(item => item.type === "progressive" ? item.icons : [item.icon]);
-	const bossImages = bosses.map(boss => boss.icon);
+  const itemImages = items.flatMap((item) =>
+    item.type === "progressive" ? item.icons : [item.icon],
+  );
+  const bossImages = bosses.map((boss) => boss.icon);
 
-	return itemImages.concat(bossImages, [
-		"./assets/go.png",
-		"./assets/item-icons/dna.png",
-	]);
+  return itemImages.concat(bossImages, [
+    "./assets/go.png",
+    "./assets/item-icons/dna.png",
+  ]);
 }
