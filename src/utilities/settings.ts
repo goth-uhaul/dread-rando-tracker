@@ -13,6 +13,8 @@ export interface TrackerSettings {
   numberOfFlashShiftUpgrades?: number;
   startWithPulseRadar?: boolean;
   allMajorBossesHaveDna?: boolean;
+  shouldUseColorKeyBackground?: boolean;
+  hexColorKeyBackground?: string;
 }
 
 export function loadPreviousSettings(): TrackerSettings {

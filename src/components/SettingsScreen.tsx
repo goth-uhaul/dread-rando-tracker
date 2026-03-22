@@ -35,6 +35,9 @@ export default function SettingsScreen({
     useState(speedBoosterUpgrades[0].defaultMaxUpgrades ?? 0);
   const [startWithPulseRadar, setStartWithPulseRadar] = useState(false);
   const [allMajorBossesHaveDna, setAllMajorBossesHaveDna] = useState(false);
+  const [shouldUseColorKeyBackground, setShouldUseColorKeyBackground] =
+    useState(false);
+  const [hexColorKeyBackground, setHexColorKeyBackground] = useState("");
   const [canLoadPreviousState] = useState(() => hasSavedState());
 
   useEffect(() => {});
@@ -63,6 +66,14 @@ export default function SettingsScreen({
     setNumberOfFlashShiftUpgrades(
       previousSettings.numberOfFlashShiftUpgrades ??
         flashShiftUpgrades[0].defaultMaxUpgrades,
+    );
+
+    setShouldUseColorKeyBackground(
+      previousSettings.shouldUseColorKeyBackground ?? false,
+    );
+
+    setHexColorKeyBackground(
+      previousSettings.hexColorKeyBackground ?? "#7700ff",
     );
   }, []);
 
@@ -253,6 +264,45 @@ export default function SettingsScreen({
                 </div>
               </label>
             )}
+            <label className="dark:text-white">
+              <input
+                type="checkbox"
+                checked={shouldUseColorKeyBackground}
+                onChange={() =>
+                  setShouldUseColorKeyBackground(!shouldUseColorKeyBackground)
+                }
+              />
+              Use color key?
+            </label>
+            {shouldUseColorKeyBackground && (
+              <label className="dark:text-white">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <div>HEX Color Key</div>
+                  <div style={{ marginLeft: "auto" }}>
+                    <input
+                      type="color"
+                      style={{
+                        width: "72px",
+                        paddingInline: "4px",
+                        color: "black",
+                        backgroundColor: "white",
+                        borderWidth: "1px",
+                        borderColor: "black",
+                      }}
+                      defaultValue={hexColorKeyBackground}
+                      onChange={(e) => {
+                        setHexColorKeyBackground(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+              </label>
+            )}
           </div>
 
           <button
@@ -271,6 +321,8 @@ export default function SettingsScreen({
                 numberOfSpeedBoosterUpgrades: numberOfSpeedBoosterUpgrades,
                 startWithPulseRadar: startWithPulseRadar,
                 allMajorBossesHaveDna: allMajorBossesHaveDna,
+                shouldUseColorKeyBackground: shouldUseColorKeyBackground,
+                hexColorKeyBackground: hexColorKeyBackground,
               };
 
               saveSettings(settings);
