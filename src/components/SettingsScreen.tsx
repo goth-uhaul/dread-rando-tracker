@@ -334,11 +334,6 @@ export default function SettingsScreen({
               };
 
               changeColorKey();
-
-              if (shouldUseColorKeyBackground) {
-                document.body.style = `background: ${hexColorKeyBackground}`;
-              }
-
               saveSettings(settings);
               doneConfiguring(settings);
             }}
