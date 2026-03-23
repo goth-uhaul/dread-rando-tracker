@@ -4,97 +4,143 @@ import { useLocationHotkeys } from "../utilities/hotkeys";
 import { ProgressiveItemState } from "../store/ProgressiveItemState";
 import { observer } from "mobx-react-lite";
 import locations from "../data/locations";
+import {
+  baseIconCss,
+  unhoverCss,
+  hoverCss,
+  itemActiveCss,
+  itemInactiveCss,
+} from "../utilities/iconCss";
 
 export interface MajorProgressiveItemCellProps {
-	itemState: ProgressiveItemState;
+  itemState: ProgressiveItemState;
 }
 
-const MajorProgressiveItemCell = observer(({ itemState }: MajorProgressiveItemCellProps) => {
-	const [mouseOver, setMouseOver] = useState(false);
-	const hotkeysDisabled = itemState.startingLocation === locations.Starting;
+const MajorProgressiveItemCell = observer(
+  ({ itemState }: MajorProgressiveItemCellProps) => {
+    const [mouseOver, setMouseOver] = useState(false);
+    const [mouseLeave, setMouseLeave] = useState(false);
+    const [didClick, setDidClick] = useState(false);
+    const hotkeysDisabled = itemState.startingLocation === locations.Starting;
 
-	useLocationHotkeys(mouseOver, itemState, hotkeysDisabled);
+    useLocationHotkeys(mouseOver, itemState, hotkeysDisabled);
 
-	const incrementLocationState = useCallback((e: React.MouseEvent) => {
-		if (e.currentTarget === e.target) {
-			e.stopPropagation();
-		}
+    const incrementLocationState = useCallback(
+      (e: React.MouseEvent) => {
+        if (e.currentTarget === e.target) {
+          e.stopPropagation();
+        }
 
-		itemState.incrementLocation();
-	}, [itemState]);
+        itemState.incrementLocation();
+      },
+      [itemState],
+    );
 
-	const decrementLocationState = useCallback((e: React.MouseEvent) => {
-		e.preventDefault();
+    const decrementLocationState = useCallback(
+      (e: React.MouseEvent) => {
+        e.preventDefault();
 
-		if (e.currentTarget === e.target) {
-			e.stopPropagation();
-		}
+        if (e.currentTarget === e.target) {
+          e.stopPropagation();
+        }
 
-		itemState.decrementLocation();
-	}, [itemState]);
+        itemState.decrementLocation();
+        setDidClick(true);
+      },
+      [itemState],
+    );
 
-	const incrementProgressionState = useCallback((e: React.MouseEvent) => {
-		if (e.currentTarget !== e.target) {
-			return;
-		}
+    const incrementProgressionState = useCallback(
+      (e: React.MouseEvent) => {
+        if (e.currentTarget !== e.target) {
+          return;
+        }
 
-		itemState.incrementProgression();
-	}, [itemState]);
+        itemState.incrementProgression();
+        setDidClick(true);
+      },
+      [itemState],
+    );
 
-	const decrementProgressionState = useCallback((e: React.MouseEvent) => {
-		e.preventDefault();
+    const decrementProgressionState = useCallback(
+      (e: React.MouseEvent) => {
+        e.preventDefault();
 
-		if (e.currentTarget !== e.target) {
-			return;
-		}
+        if (e.currentTarget !== e.target) {
+          return;
+        }
 
-		itemState.decrementProgression();
-	}, [itemState]);
+        itemState.decrementProgression();
+        setDidClick(true);
+      },
+      [itemState],
+    );
 
-	let backgroundAlpha = 0.75;
+    let iconAnimationCss = unhoverCss;
+    let iconColorCss = itemInactiveCss;
+    let icon = itemState.icon;
 
-	if (mouseOver && itemState.progression > 0) {
-		backgroundAlpha = 0.15;
-	} else if (mouseOver) {
-		backgroundAlpha = 0.65;
-	} else if (itemState.progression > 0) {
-		backgroundAlpha = 0;
-	}
+    if (mouseOver && !didClick) {
+      iconAnimationCss = hoverCss;
+      icon = itemState.icon;
+    } else if (mouseOver && didClick && !mouseLeave) {
+      iconAnimationCss = unhoverCss;
+      icon = itemState.icon;
+    }
 
-	return (
-		<div
-			data-tooltip-id={itemState.item.id}
-			data-tooltip-content={itemState.item.name}
-			className="w-[64px] h-[64px] flex justify-start"
-			style={{
-				backgroundImage: `url(${itemState.icon})`,
-				backgroundSize: "contain",
-				backgroundColor: `rgb(30,41,59,${backgroundAlpha})`,
-				backgroundBlendMode: "darken",
-			}}
-			onClick={incrementProgressionState}
-			onContextMenu={decrementProgressionState}
-			onDoubleClick={e => e.preventDefault()}
-			onMouseEnter={() => setMouseOver(true)}
-			onMouseLeave={() => setMouseOver(false)}
-		>
-			<Tooltip id={itemState.item.id} />
-			<button
-				className="w-[24px] h-[24px]"
-				onClick={incrementLocationState}
-				onContextMenu={decrementLocationState}
-				style={{
-					backgroundColor: "#ffffff",
-					opacity: 1,
-					borderColor: "#000000",
-					borderWidth: 1,
-					borderRadius: "50%",
-				}}
-			>
-				<div className="text-sm">{itemState.location.initial}</div>
-			</button>
-		</div>
-	);
-});
+    if (itemState.progression == 0) {
+      iconColorCss = itemInactiveCss;
+    } else if (itemState.progression > 0) {
+      iconColorCss = itemActiveCss;
+    }
+
+    return (
+      <div
+        data-tooltip-id={itemState.item.id}
+        data-tooltip-content={itemState.item.name}
+        className="w-[64px] h-[64px] flex justify-start"
+        style={{
+          position: "relative",
+          width: "64px",
+          height: "64px",
+        }}
+        onDoubleClick={(e) => e.preventDefault()}
+        onMouseEnter={() => {
+          setMouseOver(true);
+          setMouseLeave(false);
+        }}
+        onMouseLeave={() => {
+          setMouseOver(false);
+          setMouseLeave(true);
+          setDidClick(false);
+        }}
+      >
+        <img
+          style={{ ...baseIconCss, ...iconColorCss, ...iconAnimationCss }}
+          src={icon}
+          onClick={incrementProgressionState}
+          onContextMenu={decrementProgressionState}
+        />
+        <Tooltip id={itemState.item.id} style={{ zIndex: "4" }} />
+        <button
+          className="w-[24px] h-[24px]"
+          onClick={incrementLocationState}
+          onContextMenu={decrementLocationState}
+          style={{
+            backgroundColor: "#ffffff",
+            color: "#000011",
+            opacity: 1,
+            borderColor: "#000000",
+            borderWidth: 1,
+            borderRadius: "50%",
+            zIndex: "2",
+          }}
+        >
+          <div className="text-sm">{itemState.location.initial}</div>
+        </button>
+      </div>
+    );
+  },
+);
 
 export default MajorProgressiveItemCell;

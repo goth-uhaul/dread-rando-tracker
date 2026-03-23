@@ -12,10 +12,11 @@ Select options, then press "Open Tracker". This tracker is controlled with both 
 - Progressive Missile: check the box if this preset uses a progressive pickup structure that goes from Missiles -> Super Missiles -> Ice Missiles. If turned off, you will have to find both missile upgrades individually.
 - Progressive Spin: check the box if this preset uses a progressive pickup structure that goes from No Jump Upgrades -> Spin Boost -> Space Jump. If turned off, you will have to find both jump upgrades individually.
 - Progressive Suit: check the box if this preset uses a progressive pickup structure that goes from Power Suit -> Varia Suit -> Gravity Suit. If turned off, you will have to find both suit upgrades individually.
-- Speed Booster Has Upgrades: check this box if you can obtain Speed Booster upgrades in this preset.
-- Flash Shift Has Upgrades: check this box if you can obtain Flash Shift upgrades in this preset.
+- Speed Booster Has Upgrades: check this box if you can obtain Speed Booster upgrades in this preset. Allows you to set the number of upgrades (from 0 to 9).
+- Flash Shift Has Upgrades: check this box if you can obtain Flash Shift upgrades in this preset. Allows you to set the number of upgrades (from 0 to 9).
 - Start with Pulse Radar: check this box if this preset starts with Pulse Radar already obtained.
 - All Major Bosses Have DNA: check this box if this preset has 12 Metroid DNA pieces, one for each major boss.
+- Use color key?: check this box if you want to key the background to a certain color (for OBS, etc). The default key color is set to a color that is unlikely to conflict with any of the colors in the tracker.
 
 ### Major Items
 
