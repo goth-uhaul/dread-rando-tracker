@@ -2,11 +2,11 @@ const SettingsKey = "tracker.lastSettings";
 
 export interface TrackerSettings {
   progressiveBeam?: boolean;
-  progressiveCharge?: boolean;
-  progressiveBomb?: boolean;
   progressiveMissile?: boolean;
-  progressiveSpin?: boolean;
+  progressiveCharge?: boolean;
   progressiveSuit?: boolean;
+  progressiveBomb?: boolean;
+  progressiveSpin?: boolean;
   speedBoosterHasUpgrades?: boolean;
   numberOfSpeedBoosterUpgrades?: number;
   flashShiftHasUpgrades?: boolean;

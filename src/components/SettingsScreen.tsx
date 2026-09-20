@@ -113,10 +113,28 @@ export default function SettingsScreen({
             <label className="dark:text-white">
               <input
                 type="checkbox"
+                checked={hasProgressiveMissile}
+                onChange={() =>
+                  setHasProgressiveMissile(!hasProgressiveMissile)
+                }
+              />
+              Progressive Missile
+            </label>
+            <label className="dark:text-white">
+              <input
+                type="checkbox"
                 checked={hasProgressiveCharge}
                 onChange={() => setHasProgressiveCharge(!hasProgressiveCharge)}
               />
               Progressive Charge
+            </label>
+            <label className="dark:text-white">
+              <input
+                type="checkbox"
+                checked={hasProgressiveSuit}
+                onChange={() => setHasProgressiveSuit(!hasProgressiveSuit)}
+              />
+              Progressive Suit
             </label>
             <label className="dark:text-white">
               <input
@@ -129,28 +147,10 @@ export default function SettingsScreen({
             <label className="dark:text-white">
               <input
                 type="checkbox"
-                checked={hasProgressiveMissile}
-                onChange={() =>
-                  setHasProgressiveMissile(!hasProgressiveMissile)
-                }
-              />
-              Progressive Missile
-            </label>
-            <label className="dark:text-white">
-              <input
-                type="checkbox"
                 checked={hasProgressiveSpin}
                 onChange={() => setHasProgressiveSpin(!hasProgressiveSpin)}
               />
               Progressive Spin
-            </label>
-            <label className="dark:text-white">
-              <input
-                type="checkbox"
-                checked={hasProgressiveSuit}
-                onChange={() => setHasProgressiveSuit(!hasProgressiveSuit)}
-              />
-              Progressive Suit
             </label>
             <label className="dark:text-white">
               <input
